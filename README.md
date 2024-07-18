@@ -15,6 +15,9 @@ This application should allow a user to start a 25-minute work timer, which, upo
 triggers a 5-minute break timer automatically. This cycle should be repeatable.
 Additionally, users should have the ability to reset the current timer at any stage.
 
+## Preview
+![Sample Preview](./public/pomodoro-sample.png)
+
 ## Core Features
 [x] Timer Display: Clearly show the remaining time in minutes and seconds.
 [x] Start/Pause Button: Allow the user to start or pause the timer. When the
