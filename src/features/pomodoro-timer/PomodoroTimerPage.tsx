@@ -1,32 +1,25 @@
 import Timer from "@/components/display/Timer";
 import AppHeader from "@/components/header/Header";
-import {useTimerStore} from "@/stores/timer-store";
-import {Button, Container, Text} from "@chakra-ui/react";
-import {useState} from "react";
+import {Container, Flex, Box} from "@chakra-ui/react";
 import _ from "lodash";
-
-export enum POMODORO_STATES {
-    WORK = "WORK",
-    REST = "REST",
-    LONG_BREAK = "LONG_BREAK",
-}
+import {
+    POMODORO_STATES,
+    usePomodoroStateMachine,
+} from "@/hooks/usePomodoroStateMachine";
+import {colors} from "@/lib/themes/darkTheme";
 
 export default function PomodoroTimerPage() {
-    const [currentState, setCurrentState] = useState<POMODORO_STATES>(
-        POMODORO_STATES.WORK
-    );
+    const {getTimer, currentState, toggleCurrentState} =
+        usePomodoroStateMachine();
 
-    const {workTimer, restTimer, longRestTimer} = useTimerStore();
-
-    const getTimer = () => {
+    const getTimerColor = () => {
         switch (currentState) {
             case POMODORO_STATES.WORK:
-                return workTimer;
+                return colors.pastelRed;
             case POMODORO_STATES.REST:
-                return restTimer;
+                return colors.green;
             case POMODORO_STATES.LONG_BREAK:
-            default:
-                return longRestTimer;
+                return colors.calmingBlue;
         }
     };
 
@@ -34,9 +27,15 @@ export default function PomodoroTimerPage() {
         <Container>
             <AppHeader />
             <Timer
-                initialMinutes={getTimer()}
+                initialMinutes={0}
+                initialSeconds={3}
                 bottomDisplay={_.startCase(_.camelCase(currentState))}
+                onTimerEnd={toggleCurrentState}
+                timerColor={getTimerColor()}
             />
+            <Flex>
+                <Flex></Flex>
+            </Flex>
         </Container>
     );
 }
