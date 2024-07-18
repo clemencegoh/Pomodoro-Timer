@@ -1,6 +1,6 @@
 import Timer from "@/components/display/Timer";
 import AppHeader from "@/components/header/Header";
-import {Container, Flex, Box, Text} from "@chakra-ui/react";
+import {Container, Flex} from "@chakra-ui/react";
 import _ from "lodash";
 import {
     POM_BREAK_CYCLES,
