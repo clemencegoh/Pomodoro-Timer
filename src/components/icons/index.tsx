@@ -1,11 +1,19 @@
 import React from "react";
 import {Icon} from "@chakra-ui/react";
 
-export const PlayIcon = () => (
+interface IconProps {
+    width?: string;
+    height?: string;
+    color?: string;
+}
+
+export const PlayIcon = ({width, height}: IconProps) => (
     <Icon
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
+        w={width}
+        h={height}
         strokeWidth={1.5}
         stroke="currentColor"
         className="size-6"
@@ -23,11 +31,13 @@ export const PlayIcon = () => (
     </Icon>
 );
 
-export const PauseIcon = () => (
+export const PauseIcon = ({width, height}: IconProps) => (
     <Icon
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
+        w={width}
+        h={height}
         strokeWidth={1.5}
         stroke="currentColor"
         className="size-6"
