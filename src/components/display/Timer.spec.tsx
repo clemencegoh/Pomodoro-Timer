@@ -1,4 +1,4 @@
-import {act, render} from "@testing-library/react";
+import {act, fireEvent, render} from "@testing-library/react";
 import Timer from "./Timer";
 import {TestID} from "@/utils/testConstants";
 
@@ -66,5 +66,20 @@ describe("Timer Component", () => {
         expect(
             component.getByTestId(TestID.TIMER_TIME_DISPLAY).textContent
         ).toBe("11:59");
+    });
+
+    it("should display pause button while playing and play button while pausing", () => {
+        const component = render(
+            <Timer
+                initialMinutes={12}
+                initialSeconds={0}
+                bottomDisplay="something"
+                timerColor="#000000"
+            />
+        );
+        expect(component.getByTestId(TestID.TIMER_PAUSE_ICON)).toBeDefined();
+
+        fireEvent.click(component.getByTestId(TestID.TIMER_PLAY_PAUSE_BUTTON));
+        expect(component.getByTestId(TestID.TIMER_PLAY_ICON)).toBeDefined();
     });
 });

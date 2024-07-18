@@ -1,7 +1,15 @@
 import {colors} from "@/lib/themes/darkTheme";
 import {TestID} from "@/utils/testConstants";
-import {Box, Circle, CircularProgress, Text} from "@chakra-ui/react";
+import {
+    Box,
+    Circle,
+    CircularProgress,
+    IconButton,
+    Text,
+} from "@chakra-ui/react";
+import {keyframes} from "@emotion/react";
 import {useCallback, useEffect, useRef, useState} from "react";
+import {PauseIcon, PlayIcon} from "../icons";
 
 export type TTimerProps = {
     onTimerEnd?: () => void;
@@ -20,10 +28,15 @@ export default function Timer({
 }: Readonly<TTimerProps>) {
     const [minutes, setMinutes] = useState<number>(initialMinutes);
     const [seconds, setSeconds] = useState<number>(initialSeconds);
+    const [isRunning, setIsRunning] = useState<boolean>(true);
+    const toggleTimer = () => {
+        setIsRunning(!isRunning);
+    };
 
     const intervalRef = useRef<NodeJS.Timeout>();
 
     const changeTimer = useCallback(() => {
+        if (!isRunning) return; // paused
         if (seconds === 0) {
             if (minutes === 0) {
                 onTimerEnd?.();
@@ -34,7 +47,7 @@ export default function Timer({
             return;
         }
         setSeconds(seconds - 1);
-    }, [minutes, seconds]);
+    }, [minutes, seconds, isRunning]);
 
     useEffect(() => {
         intervalRef.current = setInterval(changeTimer, 1000);
@@ -43,6 +56,18 @@ export default function Timer({
             clearInterval(intervalRef.current);
         };
     }, [changeTimer]);
+
+    const pulse = keyframes`
+    0% {
+      opacity: 100%;
+    }
+    50% {
+      opacity: 10%;
+    }
+    100% {
+      opacity: 100%;
+    }
+  `;
 
     const minutesForDisplay = minutes < 10 ? `0${minutes}` : minutes.toString();
     const secondsForDisplay = seconds < 10 ? `0${seconds}` : seconds.toString();
@@ -67,9 +92,14 @@ export default function Timer({
                 w={["267.805px", "366px"]}
                 h={["267.805px", "366px"]}
                 bg={"darkBlueBlack"}
+                _hover={{
+                    cursor: "pointer",
+                }}
+                onClick={toggleTimer}
             >
                 <CircularProgress
                     color={timerColor ?? colors.pastelRed}
+                    animation={isRunning ? "" : `${pulse} 2s infinite ease`}
                     // @ts-expect-error: for some reason this works but ts isn't happy
                     size={["283.475px", "373px"]}
                     value={currentTime}
@@ -99,6 +129,33 @@ export default function Timer({
                     >
                         {bottomDisplay}
                     </Text>
+                    <Box
+                        display="flex"
+                        position="relative"
+                        justifyContent={"center"}
+                        mt={1}
+                    >
+                        <IconButton
+                            aria-label="pause-play-button"
+                            bg={"transparent"}
+                            onClick={toggleTimer}
+                            data-testid={TestID.TIMER_PLAY_PAUSE_BUTTON}
+                        >
+                            {isRunning ? (
+                                <PauseIcon
+                                    width="10"
+                                    height="10"
+                                    data-testid={TestID.TIMER_PAUSE_ICON}
+                                />
+                            ) : (
+                                <PlayIcon
+                                    width="10"
+                                    height="10"
+                                    data-testid={TestID.TIMER_PLAY_ICON}
+                                />
+                            )}
+                        </IconButton>
+                    </Box>
                 </Box>
             </Circle>
         </Circle>
