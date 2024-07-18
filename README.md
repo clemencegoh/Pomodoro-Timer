@@ -16,10 +16,9 @@ Additionally, users should have the ability to reset the current timer at any st
 
 ## Core Features
 [x] Timer Display: Clearly show the remaining time in minutes and seconds.
-[ ] Start/Pause Button: Allow the user to start or pause the timer. When the
+[x] Start/Pause Button: Allow the user to start or pause the timer. When the
 timer is running, the button text should change to "Pause", and vice versa.
-[ ] Reset Button: Enable the user to stop the timer (if running) and reset it to
-the initial state.
+[x] Reset Button: Enable the user to stop the timer (if running) and reset it to the initial state.
 [ ] Automatic Break: After the 25-minute work timer completes, a 5-minute
 break timer should automatically start. Indicate to the user whether the
 timer is in work or break mode.

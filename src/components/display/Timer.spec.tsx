@@ -82,4 +82,32 @@ describe("Timer Component", () => {
         fireEvent.click(component.getByTestId(TestID.TIMER_PLAY_PAUSE_BUTTON));
         expect(component.getByTestId(TestID.TIMER_PLAY_ICON)).toBeDefined();
     });
+
+    it("should reset", () => {
+        const component = render(
+            <Timer
+                initialMinutes={12}
+                initialSeconds={0}
+                bottomDisplay="something"
+                timerColor="#000000"
+            />
+        );
+
+        expect(
+            component.getByTestId(TestID.TIMER_TIME_DISPLAY).textContent
+        ).toBe("12:00");
+
+        act(() => {
+            jest.advanceTimersByTime(1000);
+        });
+
+        expect(
+            component.getByTestId(TestID.TIMER_TIME_DISPLAY).textContent
+        ).toBe("11:59");
+
+        fireEvent.click(component.getByTestId(TestID.TIMER_RESET_ICON));
+        expect(
+            component.getByTestId(TestID.TIMER_TIME_DISPLAY).textContent
+        ).toBe("12:00");
+    });
 });
