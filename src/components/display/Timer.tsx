@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import {keyframes} from "@emotion/react";
 import {useCallback, useEffect, useRef, useState} from "react";
-import {PauseIcon, PlayIcon} from "../icons";
+import {PauseIcon, PlayIcon, ResetIcon} from "../icons";
 
 export type TTimerProps = {
     onTimerEnd?: () => void;
@@ -31,6 +31,11 @@ export default function Timer({
     const [isRunning, setIsRunning] = useState<boolean>(true);
     const toggleTimer = () => {
         setIsRunning(!isRunning);
+    };
+    const resetTimer = () => {
+        setIsRunning(true);
+        setMinutes(initialMinutes);
+        setSeconds(initialSeconds);
     };
 
     const intervalRef = useRef<NodeJS.Timeout>();
@@ -92,10 +97,6 @@ export default function Timer({
                 w={["267.805px", "366px"]}
                 h={["267.805px", "366px"]}
                 bg={"darkBlueBlack"}
-                _hover={{
-                    cursor: "pointer",
-                }}
-                onClick={toggleTimer}
             >
                 <CircularProgress
                     color={timerColor ?? colors.pastelRed}
@@ -115,6 +116,10 @@ export default function Timer({
                         color="lavenderMist"
                         position="relative"
                         textAlign="center"
+                        _hover={{
+                            cursor: "pointer",
+                        }}
+                        onClick={toggleTimer}
                         data-testid={TestID.TIMER_TIME_DISPLAY}
                     >
                         {minutesForDisplay}:{secondsForDisplay}
@@ -134,6 +139,7 @@ export default function Timer({
                         position="relative"
                         justifyContent={"center"}
                         mt={1}
+                        gap={2}
                     >
                         <IconButton
                             aria-label="pause-play-button"
@@ -154,6 +160,18 @@ export default function Timer({
                                     data-testid={TestID.TIMER_PLAY_ICON}
                                 />
                             )}
+                        </IconButton>
+                        <IconButton
+                            aria-label="pause-play-button"
+                            bg={"transparent"}
+                            onClick={resetTimer}
+                            data-testid={TestID.TIMER_PLAY_PAUSE_BUTTON}
+                        >
+                            <ResetIcon
+                                width="8"
+                                height="8"
+                                data-testid={TestID.TIMER_RESET_ICON}
+                            />
                         </IconButton>
                     </Box>
                 </Box>
