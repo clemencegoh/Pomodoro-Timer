@@ -19,14 +19,11 @@ Additionally, users should have the ability to reset the current timer at any st
 ![Sample Preview](./public/pomodoro-sample.png)
 
 ## Core Features
-[x] Timer Display: Clearly show the remaining time in minutes and seconds.
-[x] Start/Pause Button: Allow the user to start or pause the timer. When the
-timer is running, the button text should change to "Pause", and vice versa.
-[x] Reset Button: Enable the user to stop the timer (if running) and reset it to the initial state.
-[x] Automatic Break: After the 25-minute work timer completes, a 5-minute
-break timer should automatically start. Indicate to the user whether the
-timer is in work or break mode.
-[x] Cycle Counter: Display the number of complete work/break cycles.
+- [x] Timer Display: Clearly show the remaining time in minutes and seconds.
+- [x] Start/Pause Button: Allow the user to start or pause the timer. When the timer is running, the button text should change to "Pause", and vice versa.
+- [x] Reset Button: Enable the user to stop the timer (if running) and reset it to the initial state.
+- [x] Automatic Break: After the 25-minute work timer completes, a 5-minute break timer should automatically start. Indicate to the user whether the timer is in work or break mode.
+- [x] Cycle Counter: Display the number of complete work/break cycles.
 
 ## How to start
 - either use bun or yarn, depending on choice of package manager
