@@ -23,7 +23,7 @@ timer is running, the button text should change to "Pause", and vice versa.
 [x] Automatic Break: After the 25-minute work timer completes, a 5-minute
 break timer should automatically start. Indicate to the user whether the
 timer is in work or break mode.
-[ ] Cycle Counter: Display the number of complete work/break cycles.
+[x] Cycle Counter: Display the number of complete work/break cycles.
 
 ## How to start
 - either use bun or yarn, depending on choice of package manager
@@ -61,6 +61,10 @@ Based loosely off https://github.com/alan2207/bulletproof-react
 rather than just over the lifetime of the session, adding another "gamification" layer where it feels like they have progressed more.
 - For that purpose, I'll use `Zustand`, which allows a `persist` layer to store in `localstorage` along with the ability to have a global context for future use.
 
+
+
+
+===========================
 
 ## Prompts used:
 - Timer:
@@ -105,4 +109,16 @@ const useTimer = ({ initialMinutes, initialSeconds }: TimerProps) => {
 };
 
 export default useTimer;
+```
+
+- Css keyframes, wasn't quite sure how to start
+```
+create a pulse animation using css
+```
+- response
+```css
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
 ```

@@ -8,6 +8,13 @@ export enum POMODORO_STATES {
   LONG_BREAK = "LONG_BREAK",
 }
 
+export const POM_BREAK_CYCLES = 4;
+
+/**
+ * Rules:
+ * - 1 Work + 1 rest makes a pom
+ * - Every 4 Poms, take 1 long break
+ */
 export function usePomodoroStateMachine(){
   const {workTimer, restTimer, longRestTimer} = useTimerStore();
   const {
@@ -33,7 +40,7 @@ export function usePomodoroStateMachine(){
           case POMODORO_STATES.REST:
             const pomsSoFar = restCounter + 1;
             setRestCounter(restCounter + 1);
-            if (pomsSoFar % 5 === 0) {
+            if (pomsSoFar % POM_BREAK_CYCLES === 0) {
               setCurrentState(POMODORO_STATES.LONG_BREAK);
               break;
             }

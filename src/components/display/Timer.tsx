@@ -130,7 +130,7 @@ export default function Timer({
                         color="lavenderMist"
                         position="relative"
                         textAlign="center"
-                        ml={0.5}
+                        ml={1.5}
                         data-testid={TestID.TIMER_BOTTOM_DISPLAY}
                     >
                         {bottomDisplay}
