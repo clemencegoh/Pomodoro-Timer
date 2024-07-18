@@ -10,9 +10,9 @@ interface TimerState {
 }
 
 const initialState: TimerState = {
-  workTimer: 1,
-  restTimer: 1,
-  longRestTimer: 1,
+  workTimer: 25,
+  restTimer: 5,
+  longRestTimer: 15,
 }
 
 interface TimerActions {
