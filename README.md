@@ -8,6 +8,7 @@ The Pomodoro Technique is a time management method in which you do focused work 
 - Boost motivation
 
 Which is why perfectionists and procrastinators will find it useful. It’s easier to commit to 25 minutes of work at a time than a whole afternoon of non-stop work.
+![The Pomodoro Method cycle](./public/pomodoro_method.avif)
 
 ## About the project
 This application should allow a user to start a 25-minute work timer, which, upon completion,
@@ -19,7 +20,7 @@ Additionally, users should have the ability to reset the current timer at any st
 [x] Start/Pause Button: Allow the user to start or pause the timer. When the
 timer is running, the button text should change to "Pause", and vice versa.
 [x] Reset Button: Enable the user to stop the timer (if running) and reset it to the initial state.
-[ ] Automatic Break: After the 25-minute work timer completes, a 5-minute
+[x] Automatic Break: After the 25-minute work timer completes, a 5-minute
 break timer should automatically start. Indicate to the user whether the
 timer is in work or break mode.
 [ ] Cycle Counter: Display the number of complete work/break cycles.

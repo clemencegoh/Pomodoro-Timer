@@ -45,7 +45,8 @@ export default function Timer({
         if (seconds === 0) {
             if (minutes === 0) {
                 onTimerEnd?.();
-                return clearInterval(intervalRef.current);
+                resetTimer();
+                return;
             }
             setMinutes(minutes - 1);
             setSeconds(59);

@@ -6,29 +6,33 @@ const STORAGE_KEY = "POMODORO/COUNTER";
 interface CounterState {
     workCounter: number;
     restCounter: number;
+    longRestCounter: number;
 }
 
 const initialState: CounterState = {
   workCounter: 0,
-  restCounter: 0
+  restCounter: 0,
+  longRestCounter: 0,
 }
 
 interface CounterActions {
-  incrementWorkCounter: () => void;
-  decrementWorkCounter: () => void;
+  setWorkCounter: (value: number) => void;
 
-  incrementRestCounter: () => void;
-  decrementRestCounter: () => void;
+  setRestCounter: (value: number) => void;
+
+  setLongRestCounter: (value: number) => void;
+
+  resetAllCounters: () => void;
 }
 
 export const useCounterStore = create<CounterState & CounterActions>()(
     persist(
         (set) => ({
             ...initialState,
-            incrementWorkCounter: () => set((state) => ({...state, workCounter: state.workCounter + 1})),
-            decrementWorkCounter: () => set((state) => ({...state, workCounter: state.workCounter - 1})),
-            incrementRestCounter: () => set((state) => ({...state, workCounter: state.restCounter + 1})),
-            decrementRestCounter: () => set((state) => ({...state, workCounter: state.restCounter - 1})),
+            setWorkCounter: (value) => set((state) => ({...state, workCounter: value})),
+            setRestCounter: (value) => set((state) => ({...state, restCounter: value})),
+            setLongRestCounter: (value) => set((state) => ({...state, longRestCounter: value})),
+            resetAllCounters: () => set(() => ({workCounter: 0, restCounter: 0, longRestCounter: 0}))
         }),
         {
             name: STORAGE_KEY,

@@ -69,6 +69,8 @@ export const colors = {
   lavenderMist: "#D7E0FF",
   ghostWhite: "#EFF1FA",
   darkByzantineBlue: "#1E213F",
+  green: "#3FBB7B",
+  calmingBlue: "#70C4F8",
 };
 
 const darkTheme = extendTheme({
