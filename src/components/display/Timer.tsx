@@ -7,7 +7,7 @@ import {
     IconButton,
     Text,
 } from "@chakra-ui/react";
-import {css, keyframes} from "@emotion/react";
+import {keyframes} from "@emotion/react";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {PauseIcon, PlayIcon} from "../icons";
 
@@ -29,6 +29,9 @@ export default function Timer({
     const [minutes, setMinutes] = useState<number>(initialMinutes);
     const [seconds, setSeconds] = useState<number>(initialSeconds);
     const [isRunning, setIsRunning] = useState<boolean>(true);
+    const toggleTimer = () => {
+        setIsRunning(!isRunning);
+    };
 
     const intervalRef = useRef<NodeJS.Timeout>();
 
@@ -89,6 +92,10 @@ export default function Timer({
                 w={["267.805px", "366px"]}
                 h={["267.805px", "366px"]}
                 bg={"darkBlueBlack"}
+                _hover={{
+                    cursor: "pointer",
+                }}
+                onClick={toggleTimer}
             >
                 <CircularProgress
                     color={timerColor ?? colors.pastelRed}
@@ -131,14 +138,21 @@ export default function Timer({
                         <IconButton
                             aria-label="pause-play-button"
                             bg={"transparent"}
-                            onClick={() => {
-                                setIsRunning(!isRunning);
-                            }}
+                            onClick={toggleTimer}
+                            data-testid={TestID.TIMER_PLAY_PAUSE_BUTTON}
                         >
                             {isRunning ? (
-                                <PauseIcon width="10" height="10" />
+                                <PauseIcon
+                                    width="10"
+                                    height="10"
+                                    data-testid={TestID.TIMER_PAUSE_ICON}
+                                />
                             ) : (
-                                <PlayIcon width="10" height="10" />
+                                <PlayIcon
+                                    width="10"
+                                    height="10"
+                                    data-testid={TestID.TIMER_PLAY_ICON}
+                                />
                             )}
                         </IconButton>
                     </Box>
