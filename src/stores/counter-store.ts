@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {createJSONStorage, persist} from "zustand/middleware";
+import {persist} from "zustand/middleware";
 
 const STORAGE_KEY = "POMODORO/COUNTER";
 
@@ -21,7 +21,7 @@ interface CounterActions {
   decrementRestCounter: () => void;
 }
 
-const useCounterStore = create<CounterState & CounterActions>()(
+export const useCounterStore = create<CounterState & CounterActions>()(
     persist(
         (set) => ({
             ...initialState,
