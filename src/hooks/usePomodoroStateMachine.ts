@@ -1,6 +1,9 @@
 import { useCounterStore } from "@/stores/counter-store";
 import { useTimerStore } from "@/stores/timer-store";
 import { useState } from "react";
+import useSound from 'use-sound';
+
+import bellsSFX from '@/assets/bells.wav';
 
 export enum POMODORO_STATES {
   WORK = "WORK",
@@ -16,7 +19,8 @@ export const POM_BREAK_CYCLES = 4;
  * - Every 4 Poms, take 1 long break
  */
 export function usePomodoroStateMachine(){
-  const {workTimer, restTimer, longRestTimer} = useTimerStore();
+  const [play] = useSound(bellsSFX);
+  const {workTimer, restTimer, longRestTimer, withSound} = useTimerStore();
   const {
       workCounter,
       restCounter,
@@ -32,6 +36,10 @@ export function usePomodoroStateMachine(){
   );
 
   const toggleCurrentState = () => {
+      if (withSound) {
+        play();
+      }
+
       switch (currentState){
           case POMODORO_STATES.WORK:
             setWorkCounter(workCounter + 1);
