@@ -3,6 +3,8 @@ import {TestID} from "@/utils/testConstants";
 import {
     Button,
     Flex,
+    FormControl,
+    FormLabel,
     Input,
     InputGroup,
     InputLeftAddon,
@@ -13,6 +15,7 @@ import {
     ModalFooter,
     ModalHeader,
     ModalOverlay,
+    Switch,
 } from "@chakra-ui/react";
 import {useEffect} from "react";
 import {useForm} from "react-hook-form";
@@ -21,6 +24,7 @@ type SettingsForm = {
     workTime: number;
     restTime: number;
     longRestTime: number;
+    enableSound: boolean;
 };
 
 export type TSettingsModalProps = {
@@ -39,6 +43,8 @@ export default function SettingsModal({
         setRestTimer,
         longRestTimer,
         setLongRestTimer,
+        withSound,
+        setWithSound,
     } = useTimerStore();
 
     const {register, getValues, watch, setValue} = useForm<SettingsForm>({
@@ -46,6 +52,7 @@ export default function SettingsModal({
             workTime: workTimer,
             restTime: restTimer,
             longRestTime: longRestTimer,
+            enableSound: withSound,
         },
     });
 
@@ -53,6 +60,7 @@ export default function SettingsModal({
         setValue("workTime", workTimer);
         setValue("restTime", restTimer);
         setValue("longRestTime", longRestTimer);
+        setValue("enableSound", withSound);
     }, [isOpen]);
 
     return (
@@ -66,7 +74,7 @@ export default function SettingsModal({
                     <form onSubmit={() => {}}>
                         <Flex gap={3} pb={3} flexDirection={"column"}>
                             <InputGroup>
-                                <InputLeftAddon>
+                                <InputLeftAddon pr={"3.2rem"}>
                                     Work time (minutes)
                                 </InputLeftAddon>
                                 <Input
@@ -80,7 +88,7 @@ export default function SettingsModal({
                                 />
                             </InputGroup>
                             <InputGroup>
-                                <InputLeftAddon>
+                                <InputLeftAddon pr={"3.5rem"}>
                                     Rest time (minutes)
                                 </InputLeftAddon>
                                 <Input
@@ -105,6 +113,15 @@ export default function SettingsModal({
                                     {...register("longRestTime")}
                                 />
                             </InputGroup>
+                            <FormControl display="flex" alignItems="center">
+                                <FormLabel htmlFor="sound-alerts" mb="0">
+                                    Enable sound?
+                                </FormLabel>
+                                <Switch
+                                    id="sound-alerts"
+                                    {...register("enableSound")}
+                                />
+                            </FormControl>
                         </Flex>
                     </form>
                 </ModalBody>
@@ -114,6 +131,7 @@ export default function SettingsModal({
                             setWorkTimer(getValues().workTime);
                             setRestTimer(getValues().restTime);
                             setLongRestTimer(getValues().longRestTime);
+                            setWithSound(getValues().enableSound);
                         }}
                         colorScheme="blue"
                     >

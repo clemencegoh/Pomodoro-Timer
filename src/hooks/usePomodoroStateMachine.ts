@@ -20,7 +20,7 @@ export const POM_BREAK_CYCLES = 4;
  */
 export function usePomodoroStateMachine(){
   const [play] = useSound(bellsSFX);
-  const {workTimer, restTimer, longRestTimer} = useTimerStore();
+  const {workTimer, restTimer, longRestTimer, withSound} = useTimerStore();
   const {
       workCounter,
       restCounter,
@@ -36,7 +36,10 @@ export function usePomodoroStateMachine(){
   );
 
   const toggleCurrentState = () => {
-    play();
+      if (withSound) {
+        play();
+      }
+
       switch (currentState){
           case POMODORO_STATES.WORK:
             setWorkCounter(workCounter + 1);
