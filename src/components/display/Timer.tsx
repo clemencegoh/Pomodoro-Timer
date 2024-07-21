@@ -38,6 +38,11 @@ export default function Timer({
         setSeconds(initialSeconds);
     };
 
+    useEffect(() => {
+        setMinutes(initialMinutes);
+        setSeconds(initialSeconds);
+    }, [initialMinutes, initialSeconds]);
+
     const intervalRef = useRef<NodeJS.Timeout>();
 
     const changeTimer = useCallback(() => {
@@ -45,7 +50,6 @@ export default function Timer({
         if (seconds === 0) {
             if (minutes === 0) {
                 onTimerEnd?.();
-                resetTimer();
                 return;
             }
             setMinutes(minutes - 1);
