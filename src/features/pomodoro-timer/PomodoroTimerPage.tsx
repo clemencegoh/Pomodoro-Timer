@@ -31,6 +31,7 @@ export default function PomodoroTimerPage() {
     return (
         <Container>
             <AppHeader />
+
             <Timer
                 initialMinutes={getTimer()}
                 initialSeconds={0}
