@@ -7,26 +7,22 @@ import {
     POMODORO_STATES,
     usePomodoroStateMachine,
 } from "@/hooks/usePomodoroStateMachine";
-import {colors} from "@/lib/themes/darkTheme";
 import {RestIcon, TomatoIcon, WorkIcon} from "@/components/icons";
 import {useCounterStore} from "@/stores/counter-store";
 import CounterBlock from "@/components/display/CounterBlock";
+import SessionResetModalWithButton from "@/components/modals/SessionResetModalWithButton";
+import {useState} from "react";
 
 export default function PomodoroTimerPage() {
-    const {getTimer, currentState, toggleCurrentState} =
+    const {getTimer, currentState, setCurrentState, toggleCurrentState} =
         usePomodoroStateMachine();
-    const {workCounter, restCounter} = useCounterStore();
+    const [forceReset, setForceReset] = useState<boolean>(false);
 
-    const getTimerColor = () => {
-        switch (currentState) {
-            case POMODORO_STATES.WORK:
-                return colors.pastelRed;
-            case POMODORO_STATES.REST:
-                return colors.green;
-            case POMODORO_STATES.LONG_BREAK:
-                return colors.calmingBlue;
-        }
+    const resetStateMachine = () => {
+        setCurrentState(POMODORO_STATES.WORK);
+        setForceReset(true);
     };
+    const {workCounter, restCounter} = useCounterStore();
 
     return (
         <Container>
@@ -35,9 +31,10 @@ export default function PomodoroTimerPage() {
             <Timer
                 initialMinutes={getTimer()}
                 initialSeconds={0}
-                bottomDisplay={_.startCase(_.camelCase(currentState))}
+                currentState={currentState}
                 onTimerEnd={toggleCurrentState}
-                timerColor={getTimerColor()}
+                reset={forceReset}
+                setReset={setForceReset}
             />
             <Flex gap={9} justifyContent={"center"} marginTop={"3rem"}>
                 <CounterBlock
@@ -58,6 +55,9 @@ export default function PomodoroTimerPage() {
                     counter={restCounter}
                     label={"Rest Counter"}
                 />
+            </Flex>
+            <Flex justifyContent={"center"} alignItems={"center"} mt={"2rem"}>
+                <SessionResetModalWithButton reset={resetStateMachine} />
             </Flex>
         </Container>
     );

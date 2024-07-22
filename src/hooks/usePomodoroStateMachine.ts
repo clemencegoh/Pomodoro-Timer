@@ -2,7 +2,6 @@ import { useCounterStore } from "@/stores/counter-store";
 import { useTimerStore } from "@/stores/timer-store";
 import { useState } from "react";
 import useSound from 'use-sound';
-
 import bellsSFX from '@/assets/bells.wav';
 
 export enum POMODORO_STATES {
@@ -76,6 +75,7 @@ export function usePomodoroStateMachine(){
   return {
     getTimer,
     toggleCurrentState,
+    setCurrentState,
     currentState,
     resetAllCounters,
   }

@@ -10,21 +10,25 @@ import {
 import {keyframes} from "@emotion/react";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {PauseIcon, PlayIcon, ResetIcon} from "../icons";
+import {POMODORO_STATES} from "@/hooks/usePomodoroStateMachine";
+import * as _ from "lodash";
 
 export type TTimerProps = {
     onTimerEnd?: () => void;
-    bottomDisplay?: string;
-    timerColor?: string;
+    currentState?: POMODORO_STATES;
     initialMinutes?: number;
     initialSeconds?: number;
+    reset?: boolean;
+    setReset?: (value: boolean) => void;
 };
 
 export default function Timer({
     onTimerEnd,
-    bottomDisplay = "unknown",
-    timerColor,
+    currentState = POMODORO_STATES.WORK,
     initialMinutes = 1,
     initialSeconds = 0,
+    reset = false,
+    setReset,
 }: Readonly<TTimerProps>) {
     const [minutes, setMinutes] = useState<number>(initialMinutes);
     const [seconds, setSeconds] = useState<number>(initialSeconds);
@@ -33,15 +37,30 @@ export default function Timer({
         setIsRunning(!isRunning);
     };
     const resetTimer = () => {
-        setIsRunning(true);
+        setIsRunning(false);
         setMinutes(initialMinutes);
         setSeconds(initialSeconds);
     };
 
+    const getTimerColor = () => {
+        switch (currentState) {
+            case POMODORO_STATES.WORK:
+                return colors.pastelRed;
+            case POMODORO_STATES.REST:
+                return colors.green;
+            case POMODORO_STATES.LONG_BREAK:
+                return colors.calmingBlue;
+        }
+    };
+
     useEffect(() => {
+        if (reset) {
+            setReset?.(false);
+            setIsRunning(false);
+        }
         setMinutes(initialMinutes);
         setSeconds(initialSeconds);
-    }, [initialMinutes, initialSeconds]);
+    }, [initialMinutes, initialSeconds, reset]);
 
     const intervalRef = useRef<NodeJS.Timeout>();
 
@@ -104,7 +123,7 @@ export default function Timer({
                 bg={"darkBlueBlack"}
             >
                 <CircularProgress
-                    color={timerColor ?? colors.pastelRed}
+                    color={getTimerColor()}
                     animation={isRunning ? "" : `${pulse} 2s infinite ease`}
                     // @ts-expect-error: for some reason this works but ts isn't happy
                     size={["283.475px", "373px"]}
@@ -137,7 +156,7 @@ export default function Timer({
                         ml={1.5}
                         data-testid={TestID.TIMER_BOTTOM_DISPLAY}
                     >
-                        {bottomDisplay}
+                        {_.startCase(_.camelCase(currentState))}
                     </Text>
                     <Box
                         display="flex"
@@ -170,7 +189,7 @@ export default function Timer({
                             aria-label="pause-play-button"
                             bg={"transparent"}
                             onClick={resetTimer}
-                            data-testid={TestID.TIMER_PLAY_PAUSE_BUTTON}
+                            data-testid={TestID.RESET_BUTTON}
                         >
                             <ResetIcon
                                 width="8"
