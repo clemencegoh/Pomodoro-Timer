@@ -1,6 +1,7 @@
 import {act, fireEvent, render} from "@testing-library/react";
 import Timer from "./Timer";
 import {TestID} from "@/utils/testConstants";
+import {POMODORO_STATES} from "@/hooks/usePomodoroStateMachine";
 
 describe("Timer Component", () => {
     afterEach(() => {
@@ -11,12 +12,10 @@ describe("Timer Component", () => {
     });
 
     it("should display bottom display", () => {
-        const component = render(
-            <Timer bottomDisplay="something" timerColor="#000000" />
-        );
+        const component = render(<Timer currentState={POMODORO_STATES.WORK} />);
         expect(
             component.getByTestId(TestID.TIMER_BOTTOM_DISPLAY).textContent
-        ).toBe("something");
+        ).toBe("Work");
     });
 
     it("should display initial timer for > 10 mins", () => {
@@ -24,8 +23,7 @@ describe("Timer Component", () => {
             <Timer
                 initialMinutes={12}
                 initialSeconds={0}
-                bottomDisplay="something"
-                timerColor="#000000"
+                currentState={POMODORO_STATES.WORK}
             />
         );
         expect(
@@ -37,8 +35,7 @@ describe("Timer Component", () => {
             <Timer
                 initialMinutes={2}
                 initialSeconds={0}
-                bottomDisplay="something"
-                timerColor="#000000"
+                currentState={POMODORO_STATES.WORK}
             />
         );
         expect(
@@ -51,8 +48,7 @@ describe("Timer Component", () => {
             <Timer
                 initialMinutes={12}
                 initialSeconds={0}
-                bottomDisplay="something"
-                timerColor="#000000"
+                currentState={POMODORO_STATES.WORK}
             />
         );
         expect(
@@ -73,8 +69,7 @@ describe("Timer Component", () => {
             <Timer
                 initialMinutes={12}
                 initialSeconds={0}
-                bottomDisplay="something"
-                timerColor="#000000"
+                currentState={POMODORO_STATES.WORK}
             />
         );
         expect(component.getByTestId(TestID.TIMER_PAUSE_ICON)).toBeDefined();
@@ -88,8 +83,7 @@ describe("Timer Component", () => {
             <Timer
                 initialMinutes={12}
                 initialSeconds={0}
-                bottomDisplay="something"
-                timerColor="#000000"
+                currentState={POMODORO_STATES.WORK}
             />
         );
 
